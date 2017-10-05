@@ -8,4 +8,7 @@
     <string name="availableOffers">Verfügbare Aufträge</string>
     <string name="createOffer">Auftrag einstellen</string>
     <string name="statistic">TOP 10</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="enter_your_passwort">Enter your passwort</string>
+    <string name="sign_in">SIGN IN</string>
 </resources>
