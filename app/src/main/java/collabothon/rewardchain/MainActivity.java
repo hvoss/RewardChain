@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity
         StatisticsFragment.OnFragmentInteractionListener,
         MainFragment.OnFragmentInteractionListener {
 
+    public static final String IN_NAME = "name";
+    public static final String IN_PASSWORD = "password";
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
     if (scanResult != null) {
@@ -47,6 +50,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String name = getIntent().getStringExtra(IN_NAME);
+        String password = getIntent().getStringExtra(IN_PASSWORD);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

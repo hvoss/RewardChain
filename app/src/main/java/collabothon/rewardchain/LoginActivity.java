@@ -38,13 +38,19 @@ public class LoginActivity extends AppCompatActivity {
 
         //Einlesen des Namens und des Passwortes bei Drücken des Buttons
         nameField = (EditText)findViewById(R.id.nameEditText);
+        passwordField = (EditText)findViewById(R.id.passwordEditText);
         signInButton = (Button)findViewById(R.id.signInButton);
 
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String name = nameField.getText().toString();
+                String password = passwordField.getText().toString();
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra(MainActivity.IN_NAME, name);
+                intent.putExtra(MainActivity.IN_PASSWORD, password);
                 startActivity(intent);
             }
         });
