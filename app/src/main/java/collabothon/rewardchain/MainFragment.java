@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -29,6 +30,8 @@ public class MainFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView numberOfPoints;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,8 +67,18 @@ public class MainFragment extends Fragment {
         }
 
 
+
+
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        numberOfPoints = (TextView) view.findViewById(R.id.numberOfPoints);
+
+        numberOfPoints.setText("Du hast 42 TQs.");
+
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
