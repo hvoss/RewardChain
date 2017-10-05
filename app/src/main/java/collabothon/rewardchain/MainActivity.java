@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -48,14 +49,21 @@ public class MainActivity extends AppCompatActivity
     public static final String IN_PASSWORD = "password";
     private BigInteger balance;
 
+    private String username;
+
+    private String password;
+
+
+    private TextView headerCoins;
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-    if (scanResult != null) {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        View view = fab.getRootView();
-        Snackbar.make(view, "Replace with your own action  " + scanResult.toString() , Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            View view = fab.getRootView();
+            Snackbar.make(view, "Replace with your own action  " + scanResult.toString() , Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
   }
 
 
@@ -66,40 +74,11 @@ public class MainActivity extends AppCompatActivity
         //Ändern des Titels der Activity
         setTitle("Home");
 
+        username = getIntent().getStringExtra(IN_NAME);
+        password = getIntent().getStringExtra(IN_PASSWORD);
+        String coins = ChainDAO.retriveBalance().toString();
 
-        //Web3j web3 = Web3jFactory.build(new HttpService("http://52.166.117.131:8545"));
-        Web3j web3 = Web3jFactory.build(new HttpService("http://13.95.159.138:8545"));
-
-        String name = getIntent().getStringExtra(IN_NAME);
-        String password = getIntent().getStringExtra(IN_PASSWORD);
-
-        String adress = "0x0085A7f13B649D9f89eB63f6f819ac0EF562c88D";
-
-        name = "rewardchaindbadmin";
-        password = "rewarddb123!";
-
-        try {
-            EthAccounts accounts = web3.ethAccounts().sendAsync().get();
-            for (String acc : accounts.getAccounts()) {
-                Log.v("RewardChain", acc);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            EthGetBalance ethGetBalance = web3.ethGetBalance(adress, DefaultBlockParameterName.LATEST).sendAsync().get();
-            balance = ethGetBalance.getBalance();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        Log.v("RewardChain", "coins: " + balance);
+        Log.v("Rechain", ChainDAO.retriveBalance() +" TQs");
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -123,10 +102,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        headerCoins = (TextView) findViewById(R.id.headerCoins);
+        if (headerCoins != null) {
+            headerCoins.setText(ChainDAO.retriveBalance() + " TQs");
+        }
 
-
-
-        Fragment fragment = MainFragment.newInstance("sdf", "df");
+        Fragment fragment = MainFragment.newInstance(username, coins);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
@@ -173,7 +154,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_statistic) {
             fragment = StatisticsFragment.newInstance("sdsd", "sdfsdf");
         } else if (id == R.id.nav_start) {
-            fragment = MainFragment.newInstance("sdsd", "sdfsdf");
+            String coins = ChainDAO.retriveBalance().toString();
+            fragment = MainFragment.newInstance(username, coins);
         }
 
         if (fragment != null) {

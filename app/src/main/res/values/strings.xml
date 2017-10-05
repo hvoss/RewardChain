@@ -18,5 +18,5 @@
     <string name="nameOfferActivity">Currently available offers</string>
     <string name="nameMainFragmentActivity">Home</string>
     <string name="nameStatisticFragment">Top 10 Statistic</string>
-    <string name="tqCoins">Hello s, you have s TQ Coins</string>
+    <string formatted="false" name="tqCoins">Hello %s, you have %s TQ Coins</string>
 </resources>
