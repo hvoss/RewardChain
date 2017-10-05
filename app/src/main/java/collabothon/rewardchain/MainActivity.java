@@ -1,9 +1,12 @@
 package collabothon.rewardchain;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,8 +20,14 @@ import android.view.MenuItem;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import static android.R.attr.fragment;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CreateOfferFragment.OnFragmentInteractionListener,
+        AvailableOffersFragment.OnFragmentInteractionListener,
+        StatisticsFragment.OnFragmentInteractionListener,
+        MainFragment.OnFragmentInteractionListener {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -55,6 +64,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment fragment = MainFragment.newInstance("sdf", "df");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
     }
 
     @Override
@@ -90,16 +104,31 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
         if (id == R.id.nav_create_offer) {
-            // Handle the camera action
+            fragment = CreateOfferFragment.newInstance("sdsd", "sdfsdf");
         } else if (id == R.id.nav_available_offers) {
-
+            fragment = AvailableOffersFragment.newInstance("sdsd", "sdfsdf");
         } else if (id == R.id.nav_statistic) {
+            fragment = StatisticsFragment.newInstance("sdsd", "sdfsdf");
+        } else if (id == R.id.nav_start) {
+            fragment = MainFragment.newInstance("sdsd", "sdfsdf");
+        }
+
+        if (fragment != null) {
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
