@@ -14,4 +14,9 @@
     <string name="enter_your_passwort">Enter your passwort</string>
     <string name="sign_in">SIGN IN</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="nameCreateActvity">Create a new Offer</string>
+    <string name="nameOfferActivity">Currently available offers</string>
+    <string name="nameMainFragmentActivity">Home</string>
+    <string name="nameStatisticFragment">Top 10 Statistic</string>
+    <string name="tqCoins">Hello s, you have s TQ Coins</string>
 </resources>
