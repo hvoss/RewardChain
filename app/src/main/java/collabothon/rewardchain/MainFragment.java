@@ -8,8 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -64,6 +62,7 @@ public class MainFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
 
 
@@ -73,9 +72,10 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         numberOfPoints = (TextView) view.findViewById(R.id.numberOfPoints);
 
-        numberOfPoints.setText("Du hast 42 TQs.");
+        numberOfPoints.setText(R.string.tqCoins);
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -83,6 +83,8 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Titel des Fragments bestimmen
+        getActivity().setTitle(getString(R.string.nameMainFragmentActivity));
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
