@@ -3,10 +3,13 @@ package collabothon.rewardchain;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /**
@@ -26,6 +29,8 @@ public class AvailableOffersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ListView list;
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,6 +63,18 @@ public class AvailableOffersFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        list = (ListView) view.findViewById(R.id.availableOffersList);
+
+        OfferAdapter offerAdapter = new OfferAdapter(getActivity());
+
+        list.setAdapter(offerAdapter);
+
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
