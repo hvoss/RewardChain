@@ -1,5 +1,6 @@
 package collabothon.rewardchain;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +14,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+    if (scanResult != null) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        View view = fab.getRootView();
+        Snackbar.make(view, "Replace with your own action  " + scanResult.toString() , Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+  }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +42,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                integrator.initiateScan();
             }
         });
 
