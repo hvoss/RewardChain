@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,17 @@ import android.widget.EditText;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.Web3jFactory;
+import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthAccounts;
+import org.web3j.protocol.core.methods.response.EthGetBalance;
+import org.web3j.protocol.http.HttpService;
+
+import java.math.BigInteger;
+import java.util.concurrent.ExecutionException;
+
 import static android.R.attr.fragment;
 
 public class MainActivity extends AppCompatActivity
@@ -35,6 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String IN_NAME = "name";
     public static final String IN_PASSWORD = "password";
+    private BigInteger balance;
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -51,8 +64,40 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        //Web3j web3 = Web3jFactory.build(new HttpService("http://52.166.117.131:8545"));
+        Web3j web3 = Web3jFactory.build(new HttpService("http://13.95.159.138:8545"));
+
         String name = getIntent().getStringExtra(IN_NAME);
         String password = getIntent().getStringExtra(IN_PASSWORD);
+
+        String adress = "0x0085A7f13B649D9f89eB63f6f819ac0EF562c88D";
+
+        name = "rewardchaindbadmin";
+        password = "rewarddb123!";
+
+        try {
+            EthAccounts accounts = web3.ethAccounts().sendAsync().get();
+            for (String acc : accounts.getAccounts()) {
+                Log.v("RewardChain", acc);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            EthGetBalance ethGetBalance = web3.ethGetBalance(adress, DefaultBlockParameterName.LATEST).sendAsync().get();
+            balance = ethGetBalance.getBalance();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        Log.v("RewardChain", "coins: " + balance);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
