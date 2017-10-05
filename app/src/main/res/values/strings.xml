@@ -13,4 +13,5 @@
     <string name="enter_your_name">Enter your Name</string>
     <string name="enter_your_passwort">Enter your passwort</string>
     <string name="sign_in">SIGN IN</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

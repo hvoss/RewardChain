@@ -33,12 +33,6 @@ public class MainActivity extends AppCompatActivity
         StatisticsFragment.OnFragmentInteractionListener,
         MainFragment.OnFragmentInteractionListener {
 
-    //Variabeln
-    private EditText nameField;
-    private EditText passwordField;
-    private Button signInButton;
-
-
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
     if (scanResult != null) {
@@ -74,10 +68,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //Einlesen des Namens und des Passwortes bei Drücken des Buttons
-        nameField = (EditText)findViewById(R.id.nameEditText);
-        //passwordField = (EditText)findViewById(R.id.passwordEditText);
 
 
 
