@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -28,6 +32,12 @@ public class MainActivity extends AppCompatActivity
         AvailableOffersFragment.OnFragmentInteractionListener,
         StatisticsFragment.OnFragmentInteractionListener,
         MainFragment.OnFragmentInteractionListener {
+
+    //Variabeln
+    private EditText nameField;
+    private EditText passwordField;
+    private Button signInButton;
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -64,6 +74,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Einlesen des Namens und des Passwortes bei Drücken des Buttons
+        nameField = (EditText)findViewById(R.id.nameEditText);
+        //passwordField = (EditText)findViewById(R.id.passwordEditText);
+
+
+
 
         Fragment fragment = MainFragment.newInstance("sdf", "df");
         FragmentManager fragmentManager = getSupportFragmentManager();
