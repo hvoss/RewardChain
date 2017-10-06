@@ -19,6 +19,7 @@ import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 
 import collabothon.rewardchain.web3j.RewardId;
+import collabothon.rewardchain.web3j.RewardTask;
 
 /**
  * Created by henrik on 05.10.17.
@@ -68,5 +69,17 @@ public class ChainDAO {
         contract.setNewName(new Utf8String(name)).get();
 
         return true;
+    }
+
+    public static void acceptOffer(String id) throws ExecutionException, InterruptedException {
+        Parity parity = ParityFactory.build(new HttpService(serverAdress));
+        parity.personalUnlockAccount(techUser1Address, techUser1Password).sendAsync().get();
+
+        Web3j web3 = Web3jFactory.build(new HttpService(serverAdress));
+
+        TransactionManager transactionManager = new ClientTransactionManager(web3, techUser1Address);
+
+        RewardTask contract = RewardTask.load(techUser1Contract, web3, transactionManager, null, null);
+
     }
 }
