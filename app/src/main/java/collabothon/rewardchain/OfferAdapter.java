@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import collabothon.rewardchain.model.Offer;
 
 /**
@@ -21,7 +24,9 @@ public class OfferAdapter extends BaseAdapter {
 
     private Context context;
 
+
     public OfferAdapter(Context context) {
+
 
         this.context = context;
     }
@@ -54,8 +59,28 @@ public class OfferAdapter extends BaseAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.offerName);
         TextView coins = (TextView) convertView.findViewById(R.id.offerCoins);
         // Populate the data into the template view using the data object
-        name.setText("Test");
-        coins.setText("Hallo");
+
+        switch (position) {
+            case 0:
+                name.setText("Unload the dishwasher");
+                break;
+            case 1:
+                name.setText("Presentation");
+                break;
+            case 2:
+                name.setText("Help me design");
+                break;
+            case 3:
+                name.setText("PHP coder needed");
+                break;
+            case 4:
+                name.setText("Help me with my business plan");
+                break;
+            default:
+                name.setText("HELP!");
+        }
+
+        coins.setText("");
         // Return the completed view to render on screen
         return convertView;
     }

@@ -65,7 +65,7 @@ public class OfferAccepted extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        getActivity().setTitle("Offer accepted");
+        getActivity().setTitle("Task accepted");
 
         return inflater.inflate(R.layout.fragment_offer_accepted, container, false);
     }

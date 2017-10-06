@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="availableOffers">Available Offers</string>
+    <string name="availableOffers">Available Tasks</string>
     <string name="createOffer">Create a Task</string>
     <string name="statistic">TOP 10</string>
 
@@ -14,7 +14,7 @@
     <string name="enter_your_passwort">Enter your passwort</string>
     <string name="sign_in">SIGN IN</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="nameCreateActvity">Create a new Offer</string>
+    <string name="nameCreateActvity">Create a new Task</string>
     <string name="nameOfferActivity">Currently available offers</string>
     <string name="nameMainFragmentActivity">Home</string>
     <string name="nameStatisticFragment">Top 10 Statistic</string>

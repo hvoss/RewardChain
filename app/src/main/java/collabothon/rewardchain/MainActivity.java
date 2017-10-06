@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         if (id == R.id.nav_create_offer) {
             fragment = CreateOfferFragment.newInstance("sdsd", "sdfsdf");
-       // } else if (id == R.id.nav_available_offers) {
-            //     fragment = AvailableOffersFragment.newInstance("sdsd", "sdfsdf");
+        } else if (id == R.id.nav_available_offers) {
+            fragment = AvailableOffersFragment.newInstance("sdsd", "sdfsdf");
             //  } else if (id == R.id.nav_statistic) {
             //       fragment = StatisticsFragment.newInstance("sdsd", "sdfsdf");
         } else if (id == R.id.nav_start) {
