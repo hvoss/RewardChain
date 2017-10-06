@@ -85,4 +85,17 @@ public class ChainDAO {
         contract.insertSuggestion(new Uint256(1200)).get();
 
     }
+
+    public static void tesd(String id) throws ExecutionException, InterruptedException {
+        Parity parity = ParityFactory.build(new HttpService(serverAdress));
+        parity.personalUnlockAccount(techUser1Address, techUser1Password).sendAsync().get();
+
+
+        Web3j web3 = Web3jFactory.build(new HttpService(serverAdress));
+
+        TransactionManager transactionManager = new ClientTransactionManager(web3, techUser1Address);
+
+        RewardTask contract = RewardTask.load(id, web3, transactionManager, null, null);
+
+    }
 }

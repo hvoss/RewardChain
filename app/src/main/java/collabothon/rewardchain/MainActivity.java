@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity
 
 
     private TextView headerCoins;
+    private TextView headerName;
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         final IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
@@ -122,6 +124,10 @@ public class MainActivity extends AppCompatActivity
         headerCoins = (TextView) navigationView.getHeaderView(0).findViewById(R.id.headerCoins);
         if (headerCoins != null) {
             headerCoins.setText(ChainDAO.retrieveBalance() + " TQs");
+        }
+        headerName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.headerName);
+        if (headerName != null) {
+            headerName.setText(username);
         }
 
         Fragment fragment = MainFragment.newInstance(username, coins);
