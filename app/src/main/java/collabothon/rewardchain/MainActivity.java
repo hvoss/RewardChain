@@ -3,6 +3,7 @@ package collabothon.rewardchain;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -33,7 +35,10 @@ public class MainActivity extends AppCompatActivity
         CreateOfferFragment.OnFragmentInteractionListener,
         AvailableOffersFragment.OnFragmentInteractionListener,
         StatisticsFragment.OnFragmentInteractionListener,
-        MainFragment.OnFragmentInteractionListener {
+        MainFragment.OnFragmentInteractionListener,
+        AcceptOffer.OnFragmentInteractionListener,
+        OfferAccepted.OnFragmentInteractionListener
+{
 
     public static final String IN_NAME = "name";
     public static final String IN_PASSWORD = "password";
@@ -43,16 +48,26 @@ public class MainActivity extends AppCompatActivity
 
     private String password;
 
+    private LinearLayout linearLayout;
+
 
     private TextView headerCoins;
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        final IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            View view = fab.getRootView();
-            Snackbar.make(view, "Replace with your own action  " + scanResult.toString() , Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            final View view = fab.getRootView();
+
+
+            new Handler().post(new Runnable() {
+                public void run() {
+                    Fragment fragment = AcceptOffer.newInstance(scanResult.getContents());
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                }
+            });
         }
   }
 
@@ -104,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        headerCoins = (TextView) findViewById(R.id.headerCoins);
+        headerCoins = (TextView) navigationView.getHeaderView(0).findViewById(R.id.headerCoins);
         if (headerCoins != null) {
             headerCoins.setText(ChainDAO.retrieveBalance() + " TQs");
         }
@@ -174,6 +189,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+        Fragment fragment;
+        if (uri.compareTo(Uri.parse("http://offerSelected")) == 0) {
+            fragment = AcceptOffer.newInstance("ssadf");
+        } else {
+            fragment = OfferAccepted.newInstance("", "");
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
     }
 }
