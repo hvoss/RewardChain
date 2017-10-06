@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.math.BigInteger;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,9 +63,6 @@ public class MainFragment extends Fragment {
 
         }
 
-
-
-
     }
 
     @Override
@@ -76,7 +71,9 @@ public class MainFragment extends Fragment {
         numberOfPoints = (TextView) view.findViewById(R.id.numberOfPoints);
 
         String str = getString(R.string.tqCoins);
+        coins = coins.substring(0,5);
         numberOfPoints.setText(String.format(str, username, coins));
+
 
         super.onViewCreated(view, savedInstanceState);
     }
