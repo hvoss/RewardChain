@@ -2,13 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mainbackground"
+    android:paddingStart="0sp"
+    android:paddingTop="0sp"
     tools:context="collabothon.rewardchain.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@id/numberOfPoints"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="asdfdf" />
+        android:layout_height="107dp"
+        android:paddingBottom="0dp"
+        android:paddingRight="0dp"
+        android:paddingStart="0dp"
+        android:paddingTop="0dp"
+        android:text="Hello "
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/colorAccent"
+        android:textSize="36sp"
+        android:textStyle="bold" />
 
 </FrameLayout>
