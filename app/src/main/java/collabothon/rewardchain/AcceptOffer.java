@@ -8,34 +8,33 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+
+import java.util.concurrent.ExecutionException;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AvailableOffersFragment.OnFragmentInteractionListener} interface
+ * {@link AcceptOffer.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AvailableOffersFragment#newInstance} factory method to
+ * Use the {@link AcceptOffer#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AvailableOffersFragment extends Fragment {
+public class AcceptOffer extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_ADDRESS = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private ListView list;
+    private String address;
 
     private OnFragmentInteractionListener mListener;
 
-    public AvailableOffersFragment() {
+    private Button btnAccept;
+
+    public AcceptOffer() {
         // Required empty public constructor
     }
 
@@ -43,16 +42,14 @@ public class AvailableOffersFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AvailableOffersFragment.
+     * @param address Parameter 1.
+     * @return A new instance of fragment AcceptOffer.
      */
     // TODO: Rename and change types and number of parameters
-    public static AvailableOffersFragment newInstance(String param1, String param2) {
-        AvailableOffersFragment fragment = new AvailableOffersFragment();
+    public static AcceptOffer newInstance(String address) {
+        AcceptOffer fragment = new AcceptOffer();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_ADDRESS, address);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,37 +58,38 @@ public class AvailableOffersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            address = getArguments().getString(ARG_ADDRESS);
         }
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        btnAccept = (Button) view.findViewById(R.id.btnAccept);
 
-        list = (ListView) view.findViewById(R.id.availableOffersList);
-
-        OfferAdapter offerAdapter = new OfferAdapter(getActivity());
-
-        list.setAdapter(offerAdapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mListener.onFragmentInteraction(Uri.parse("http://offerSelected"));
+            public void onClick(View view) {
+                try {
+                    ChainDAO.acceptOffer(address);
+                    mListener.onFragmentInteraction(Uri.parse("http://btnAccept"));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Titel des Fragments bestimmen
-        getActivity().setTitle(getString(R.string.nameOfferActivity));
+
+        getActivity().setTitle("Accept offer");
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_available_offers, container, false);
+        return inflater.inflate(R.layout.fragment_accept_offer, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
