@@ -10,8 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,24 +17,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.Web3jFactory;
-import org.web3j.protocol.core.DefaultBlockParameter;
-import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.response.EthAccounts;
-import org.web3j.protocol.core.methods.response.EthGetBalance;
-import org.web3j.protocol.http.HttpService;
+import org.web3j.crypto.CipherException;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
-
-import static android.R.attr.fragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -76,9 +66,21 @@ public class MainActivity extends AppCompatActivity
 
         username = getIntent().getStringExtra(IN_NAME);
         password = getIntent().getStringExtra(IN_PASSWORD);
-        String coins = ChainDAO.retriveBalance().toString();
+        String coins = ChainDAO.retrieveBalance().toString();
 
-        Log.v("Rechain", ChainDAO.retriveBalance() +" TQs");
+        try {
+            ChainDAO.setName("", username);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CipherException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Log.v("Rechain", ChainDAO.retrieveBalance() +" TQs");
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         headerCoins = (TextView) findViewById(R.id.headerCoins);
         if (headerCoins != null) {
-            headerCoins.setText(ChainDAO.retriveBalance() + " TQs");
+            headerCoins.setText(ChainDAO.retrieveBalance() + " TQs");
         }
 
         Fragment fragment = MainFragment.newInstance(username, coins);
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_statistic) {
             fragment = StatisticsFragment.newInstance("sdsd", "sdfsdf");
         } else if (id == R.id.nav_start) {
-            String coins = ChainDAO.retriveBalance().toString();
+            String coins = ChainDAO.retrieveBalance().toString();
             fragment = MainFragment.newInstance(username, coins);
         }
 
