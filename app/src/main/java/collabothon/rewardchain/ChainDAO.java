@@ -1,6 +1,7 @@
 package collabothon.rewardchain;
 
 import org.web3j.abi.datatypes.Utf8String;
+import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.CipherException;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.Web3jFactory;
@@ -79,7 +80,9 @@ public class ChainDAO {
 
         TransactionManager transactionManager = new ClientTransactionManager(web3, techUser1Address);
 
-        RewardTask contract = RewardTask.load(techUser1Contract, web3, transactionManager, null, null);
+        RewardTask contract = RewardTask.load(id, web3, transactionManager, null, null);
+
+        contract.insertSuggestion(new Uint256(1200)).get();
 
     }
 }
