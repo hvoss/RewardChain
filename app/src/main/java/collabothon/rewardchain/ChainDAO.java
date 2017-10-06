@@ -17,6 +17,7 @@ import org.web3j.tx.TransactionManager;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 import collabothon.rewardchain.web3j.RewardId;
@@ -36,15 +37,25 @@ public class ChainDAO {
 
     static String techUser1Contract = "0x9A85899035e6FF53668FEf07b502dF7cA965f2C5";
 
-    public static BigDecimal retrieveBalance() {
+    public static String retrieveBalance() {
         Web3j web3 = Web3jFactory.build(new HttpService(serverAdress));
-
 
         try {
             EthGetBalance ethGetBalance = web3.ethGetBalance(techUser1Address, DefaultBlockParameterName.LATEST).sendAsync().get();
             BigInteger balance = ethGetBalance.getBalance();
             if (balance != null) {
-                return new BigDecimal(balance).divide(new BigDecimal(("1000000000000000000")));
+                BigDecimal c = new BigDecimal(balance).divide(new BigDecimal(("1000000000000000000")));
+                DecimalFormat df = new DecimalFormat();
+
+                df.setMaximumFractionDigits(0);
+
+                df.setMinimumFractionDigits(0);
+
+                df.setGroupingUsed(false);
+
+                String coins = df.format(c);
+
+                return coins;
             }
 
         } catch (InterruptedException e) {
@@ -53,7 +64,7 @@ public class ChainDAO {
             e.printStackTrace();
         }
 
-        return BigDecimal.valueOf(-1);
+        return "-1";
     }
 
     public static boolean setName(String id, String name) throws IOException, CipherException, ExecutionException, InterruptedException {

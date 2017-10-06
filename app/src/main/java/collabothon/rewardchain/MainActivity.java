@@ -27,7 +27,11 @@ import com.google.zxing.integration.android.IntentResult;
 import org.web3j.crypto.CipherException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
@@ -83,7 +87,9 @@ public class MainActivity extends AppCompatActivity
 
         username = getIntent().getStringExtra(IN_NAME);
         password = getIntent().getStringExtra(IN_PASSWORD);
-        String coins = ChainDAO.retrieveBalance().toString();
+
+        String c = ChainDAO.retrieveBalance();
+
 
         try {
             ChainDAO.setName("", username);
@@ -120,17 +126,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         headerCoins = (TextView) navigationView.getHeaderView(0).findViewById(R.id.headerCoins);
-        if (headerCoins != null) {
-            headerCoins.setText(ChainDAO.retrieveBalance() + " TQs");
-        }
+
+
         headerName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.headerName);
         if (headerName != null) {
             headerName.setText(username);
         }
 
-        Fragment fragment = MainFragment.newInstance(username, coins);
+        headerCoins.setText(ChainDAO.retrieveBalance() + " TQs");
+
+        Fragment fragment = MainFragment.newInstance(username, c);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
@@ -172,10 +178,10 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         if (id == R.id.nav_create_offer) {
             fragment = CreateOfferFragment.newInstance("sdsd", "sdfsdf");
-        } else if (id == R.id.nav_available_offers) {
-            fragment = AvailableOffersFragment.newInstance("sdsd", "sdfsdf");
-        } else if (id == R.id.nav_statistic) {
-            fragment = StatisticsFragment.newInstance("sdsd", "sdfsdf");
+       // } else if (id == R.id.nav_available_offers) {
+            //     fragment = AvailableOffersFragment.newInstance("sdsd", "sdfsdf");
+            //  } else if (id == R.id.nav_statistic) {
+            //       fragment = StatisticsFragment.newInstance("sdsd", "sdfsdf");
         } else if (id == R.id.nav_start) {
             String coins = ChainDAO.retrieveBalance().toString();
             fragment = MainFragment.newInstance(username, coins);

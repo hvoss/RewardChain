@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,10 +73,9 @@ public class MainFragment extends Fragment {
 
         numberOfPoints = (TextView) view.findViewById(R.id.numberOfPoints);
 
+        String c = ChainDAO.retrieveBalance();
         String str = getString(R.string.tqCoins);
-        coins = coins.substring(0,5);
-        numberOfPoints.setText(String.format(str, username, coins));
-
+        numberOfPoints.setText(String.format(str, username, c));
 
         super.onViewCreated(view, savedInstanceState);
     }
