@@ -15,7 +15,7 @@
     <string name="sign_in">SIGN IN</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="nameCreateActvity">Create a new Task</string>
-    <string name="nameOfferActivity">Currently available offers</string>
+    <string name="nameOfferActivity">Currently available tasks</string>
     <string name="nameMainFragmentActivity">Home</string>
     <string name="nameStatisticFragment">Top 10 Statistic</string>
     <string name="tqCoins" formatted="false">Hello %s, you have %s TQ Coins</string>
